@@ -77,7 +77,7 @@ export default function Home() {
                             </div>
                             <div className="flex">
                                 <h5 className="font-bold mb-[0.5rem] w-[12rem]">Perminatan</h5>
-                                <p>{ data?.peminataan || "-" }</p>
+                                <p>{ data?.peminatan || "-" }</p>
                             </div>
                         </div>
                     </div>

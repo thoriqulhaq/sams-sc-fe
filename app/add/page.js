@@ -3,7 +3,9 @@ import { useState } from 'react';
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Dropdown } from 'primereact/dropdown';
-import "primereact/resources/primereact.min.css"; 
+import "primereact/resources/primereact.min.css";
+import Link from 'next/link'
+import 'primeicons/primeicons.css'; 
 
 
 export default function AddStudentPage() {
@@ -15,7 +17,7 @@ export default function AddStudentPage() {
     address: '',
     academicYear: '',
     semester: '',
-    peminataan: '',
+    peminatan: '',
   });
 
   const gender = [
@@ -24,6 +26,10 @@ export default function AddStudentPage() {
     
    
   ];
+  
+  const getGender = (gen) => {
+    return gender.find(g => g.name == gen);
+  }
 
   const handleChange = (e, field) => {
     setStudent(prevState => ({ ...prevState, [field]: field == 'gender' ? e.target.value.name : e.target.value }));
@@ -47,41 +53,46 @@ export default function AddStudentPage() {
 
   return (
     <div className="container mx-auto mt-8">
-      <h1 className="text-2xl font-bold mb-4">Add New Student</h1>
-      <div className="grid gap-4">
-        <div className="flex gap-4">
+      <div className="flex items-center gap-[2rem] mb-12">
+          <Link href={'/'} className="pi pi-angle-left" style={{ fontSize: '2rem' }}></Link>
+          <div>
+            <h1 className="text-2xl font-bold">Add New Student</h1>
+          </div>
+      </div>
+      <div className="grid gap-8 items-center">
+        <div className="flex gap-8 items-center">
           <label className="w-36">NIS</label>
-          <InputText value={student.nis} onChange={e => handleChange(e, 'nis')} />
+          <InputText className='w-full' value={student.nis} onChange={e => handleChange(e, 'nis')} />
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-8 items-center">
           <label className="w-36">NISN</label>
-          <InputText value={student.nisn} onChange={e => handleChange(e, 'nisn')} />
+          <InputText className='w-full' value={student.nisn} onChange={e => handleChange(e, 'nisn')} />
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-8 items-center">
           <label className="w-36">Name</label>
-          <InputText value={student.name} onChange={e => handleChange(e, 'name')} />
+          <InputText className='w-full' value={student.name} onChange={e => handleChange(e, 'name')} />
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-8 items-center">
           <label className="w-36">Gender</label>
-          <Dropdown value={student.gender} onChange={(e => handleChange(e, 'gender'))} options={gender} optionLabel="name" 
+          <Dropdown className='w-full' value={getGender(student.gender)} onChange={(e => handleChange(e, 'gender'))} options={gender} optionLabel="name" 
     placeholder="Student Gender"  />
           
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-8 items-center">
           <label className="w-36">Address</label>
-          <InputText value={student.address} onChange={e => handleChange(e, 'address')} />
+          <InputText className='w-full' value={student.address} onChange={e => handleChange(e, 'address')} />
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-8 items-center">
           <label className="w-36">Academic Year</label>
-          <InputText value={student.academicYear} onChange={e => handleChange(e, 'academicYear')} />
+          <InputText className='w-full' value={student.academicYear} onChange={e => handleChange(e, 'academicYear')} />
         </div>
-        <div className="flex gap-4">
+        <div className="flex gap-8 items-center">
           <label className="w-36">Semester</label>
-          <InputText value={student.semester} onChange={e => handleChange(e, 'semester')} />
+          <InputText className='w-full' value={student.semester} onChange={e => handleChange(e, 'semester')} />
         </div>
-        <div className="flex gap-4">
-          <label className="w-36">Peminataan</label>
-          <InputText value={student.peminataan} onChange={e => handleChange(e, 'peminataan')} />
+        <div className="flex gap-8 items-center">
+          <label className="w-36">Peminatan</label>
+          <InputText className='w-full' value={student.peminatan} onChange={e => handleChange(e, 'peminatan')} />
         </div>
         <div className="flex justify-end mt-4">
           <Button label="Submit"  onClick={handleSubmit}  />
