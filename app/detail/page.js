@@ -3,16 +3,18 @@
 import 'primeicons/primeicons.css';
 import { useState, useEffect } from 'react';
 import Link from 'next/link'
-
+import { useSearchParams } from 'next/navigation'
 
 
 export default function Home() {
     const [data, setData] = useState({}); 
     const [loading, setLoading] = useState(true);
-    
-    
+    const searchParams = useSearchParams()
+    const id = searchParams.get('id')
+
+
     const getStudent = async () => {
-        const res = await fetch("http://localhost:4000/api/v1/student/649e6161d5febf58b93539e3");
+        const res = await fetch(`http://localhost:4000/api/v1/student/${id}`);
         const data = await res.json();
         setData(data.data);
         setLoading(false);
