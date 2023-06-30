@@ -18,26 +18,51 @@ export default function AddStudentPage() {
     peminataan: '',
   });
 
-  const [selectedGender, setSelectedGender] = useState(null);
   const gender = [
       { name: 'Laki - Laki', code: 'ML' },
       { name: 'Perempuan', code: 'FML' },
+    
    
   ];
 
   const handleChange = (e, field) => {
-    setStudent(prevState => ({ ...prevState, [field]: e.target.value }));
+    setStudent(prevState => ({ ...prevState, [field]: field == 'gender' ? e.target.value.name : e.target.value }));
   };
 
-  const handleSubmit = () => {
-    // Perform submit action here
-    console.log('Submitting:', student);
+  const handleSubmit = async () => {
+    try {
+      const res = await fetch('http://localhost:4000/api/v1/student', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(student),
+      });
+      const data = await res.json();
+      //clear form
+        setStudent({
+            nis: '',
+            nisn: '',
+            name: '',
+            gender: '',
+            address: '',
+            academicYear: '',
+            semester: '',
+            peminataan: '',
+        });
+        //redirect
+        window.location.href = '/';
+            
+    } catch (error) {
+      console.log(error);
+    }
+
   };
 
   return (
     <div className="container mx-auto mt-8">
       <h1 className="text-2xl font-bold mb-4">Add New Student</h1>
-      <form className="grid gap-4" onSubmit={handleSubmit}>
+      <div className="grid gap-4">
         <div className="flex gap-4">
           <label className="w-36">NIS</label>
           <InputText value={student.nis} onChange={e => handleChange(e, 'nis')} />
@@ -52,8 +77,7 @@ export default function AddStudentPage() {
         </div>
         <div className="flex gap-4">
           <label className="w-36">Gender</label>
-          {/* <InputText value={student.gender} onChange={e => handleChange(e, 'gender')} /> */}
-          <Dropdown value={selectedGender} onChange={(e) => setSelectedGender(e.value)} options={gender} optionLabel="gender" 
+          <Dropdown value={student.gender} onChange={(e => handleChange(e, 'gender'))} options={gender} optionLabel="name" 
     placeholder="Student Gender"  />
           
         </div>
@@ -74,9 +98,9 @@ export default function AddStudentPage() {
           <InputText value={student.peminataan} onChange={e => handleChange(e, 'peminataan')} />
         </div>
         <div className="flex justify-end mt-4">
-          <Button label="Submit" onClick={handleSubmit} />
+          <Button label="Submit"  onClick={handleSubmit}  />
         </div>
-      </form>
+      </div>
     </div>
   );
 }
