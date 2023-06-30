@@ -38,21 +38,7 @@ export default function AddStudentPage() {
         },
         body: JSON.stringify(student),
       });
-      const data = await res.json();
-      //clear form
-        setStudent({
-            nis: '',
-            nisn: '',
-            name: '',
-            gender: '',
-            address: '',
-            academicYear: '',
-            semester: '',
-            peminataan: '',
-        });
-        //redirect
         window.location.href = '/';
-            
     } catch (error) {
       console.log(error);
     }
